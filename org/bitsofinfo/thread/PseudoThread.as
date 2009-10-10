@@ -23,7 +23,7 @@ package org.bitsofinfo.thread {
 	[Event(name="error", type="flash.events.ErrorEvent")]
 	
 	/**
-	 * Dispatched when the thread's work makes progress
+	 * Dispatched when the thread's work (IRunnable) makes progress
 	 * 
 	 * @eventType	flash.events.ErrorEvent.ERROR
 	 */ 
@@ -36,9 +36,11 @@ package org.bitsofinfo.thread {
 	 * who's process() function will be called every "msDelay" milliseconds.
 	 * The IRunnable's isComplete() method is consulted
 	 * after each process() invocation to determine if the processing
-	 * should cease. When IRunnable.isComplete() returns true
-	 * the Thread will terminate and fire off the Event.COMPLETE
-	 * event. </p>
+	 * should cease. If the IRunnable is NOT completed (and the thread's timeout has not been reached)
+	 * PsuedoThread will dispatch ProgressEvents using the progress values retrieved
+	 * from IRunnable.getProgress() and IRunnable.getTotal(). 
+	 * When IRunnable.isComplete() returns true the Thread will terminate and 
+	 * fire off the Event.COMPLETE event. </p>
 	 * 
 	 * <p>PseudoThreads are useful for time consuming processing operations
 	 * where a delay in the UI is un-acceptable. The smaller you set the <code>msDelay</code>

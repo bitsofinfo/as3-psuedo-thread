@@ -4,7 +4,11 @@ package org.bitsofinfo.thread {
 	 * An IRunnable is to be used with PseudoThread which
 	 * will call an IRunnable's process() method repeatedly
 	 * until a timeout is reached or the isComplete() method returns
-	 * true.
+	 * true. An IRunnable should reflect its current progress
+	 * by returning appropriate values from the getTotal()
+	 * and getProgress() methods, which will be consulted
+	 * by PseudoThread when it dispatches the thread's
+	 * progress events.
 	 * 
 	 * @see PseudoThread
 	 * 
@@ -32,7 +36,9 @@ package org.bitsofinfo.thread {
 		
 		/**
 		 * Returns an int which represents the total
-		 * amount of "work" to be done.
+		 * amount of "work" to be done. This is consulted
+		 * by PseudoThread after each process() invocation
+		 * when PseudoThread dispatches progress events.
 		 * 
 		 * @return	int	total amount of work to be done
 		 * */
@@ -41,7 +47,9 @@ package org.bitsofinfo.thread {
 		/**
 		 * Returns an int which represents the total amount
 		 * of work processed so far out of the overall total
-		 * returned by getTotal()
+		 * returned by getTotal().This is consulted
+		 * by PseudoThread after each process() invocation
+		 * when PseudoThread dispatches progress events.
 		 * 
 		 * @return	int	total amount of work processed so far
 		 * */
