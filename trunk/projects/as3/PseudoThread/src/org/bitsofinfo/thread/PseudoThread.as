@@ -97,7 +97,7 @@ package org.bitsofinfo.thread {
 
 			if (msTimeout != -1) {
 				if (msTimeout < msDelay) {
-					throw new Error("PseudoThread cannot be constructed with a timeoutMS that is less than the delayMS");
+					throw new Error("PseudoThread cannot be constructed with a msTimeout that is less than the msDelay");
 				}
 				maxRunTimes = Math.ceil(msTimeout / msDelay);
 			}
