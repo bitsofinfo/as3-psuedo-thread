@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="456" height="76"
-	 creationComplete="reset()" viewSourceURL="srcview/index.html">
+     creationComplete="reset()" viewSourceURL="srcview/index.html">
 
-	<mx:Script>
-		<![CDATA[
-			import org.bitsofinfo.thread.TestRunnable;
-			import org.bitsofinfo.thread.PseudoThread;
-			import org.bitsofinfo.thread.IRunnable;
-			
-			var runnable:IRunnable;
-			var thread:PseudoThread;
-			
-			private function createThread():void {
-				if (thread != null) {
-					try {
-						thread.destroy();
-					} catch(e:Error) {
-						// thread might already be destroyed due to actually being finished vs pressing reset in the middle
-					}
-				}
-				
-				thread = new PseudoThread(createRunnable(),"Test",100);
-			}
-			
-			private function createRunnable():IRunnable {
-				runnable = new TestRunnable();
-				return runnable;
-			}
-			
-			private function start():void {
-				thread.addEventListener(Event.COMPLETE,handleComplete);
-				thread.addEventListener(ProgressEvent.PROGRESS,handleProgress);
-				thread.start();
-			}
-			
-			private function handleComplete(e:Event):void {
-				thread.removeEventListener(Event.COMPLETE,handleComplete);
-				thread.removeEventListener(ProgressEvent.PROGRESS,handleProgress);
-				this.progBar.setProgress(100,100);
-				this.progress.text = runnable.getTotal().toString();
-				progBar.label= "CurrentProgress" + " 100%";
-			}
-			
-			private function handleProgress(e:ProgressEvent):void {
-				this.progBar.setProgress(e.bytesLoaded,e.bytesTotal);
-				this.progress.text = e.bytesLoaded.toString();
-				progBar.label= "CurrentProgress" + " " + Math.ceil(e.bytesLoaded/e.bytesTotal *100) + "%";
-				
-				
-			}
-			
-			private function reset():void {
-				if (thread != null) {
-					thread.removeEventListener(Event.COMPLETE,handleComplete);
-					thread.removeEventListener(ProgressEvent.PROGRESS,handleProgress);
-				}
-				
-				this.progBar.setProgress(0,100);
-				this.progBar.label =  "CurrentProgress" + " 0%";
-				
-				createThread();
-				this.progress.text= this.runnable.getProgress().toString();
-				this.totalWork.text = this.runnable.getTotal().toString();
-			}
-			
-		]]>
-	</mx:Script>	
+    <mx:Script>
+        <![CDATA[
+            import org.bitsofinfo.thread.TestRunnable;
+            import org.bitsofinfo.thread.PseudoThread;
+            import org.bitsofinfo.thread.IRunnable;
+            
+            var runnable:IRunnable;
+            var thread:PseudoThread;
+            
+            private function createThread():void {
+                if (thread != null) {
+                    try {
+                        thread.destroy();
+                    } catch(e:Error) {
+                        // thread might already be destroyed due to actually being finished vs pressing reset in the middle
+                    }
+                }
+                
+                thread = new PseudoThread(createRunnable(),"Test",100);
+            }
+            
+            private function createRunnable():IRunnable {
+                runnable = new TestRunnable();
+                return runnable;
+            }
+            
+            private function start():void {
+                thread.addEventListener(Event.COMPLETE,handleComplete);
+                thread.addEventListener(ProgressEvent.PROGRESS,handleProgress);
+                thread.start();
+            }
+            
+            private function handleComplete(e:Event):void {
+                thread.removeEventListener(Event.COMPLETE,handleComplete);
+                thread.removeEventListener(ProgressEvent.PROGRESS,handleProgress);
+                this.progBar.setProgress(100,100);
+                this.progress.text = runnable.getTotal().toString();
+                progBar.label= "CurrentProgress" + " 100%";
+            }
+            
+            private function handleProgress(e:ProgressEvent):void {
+                this.progBar.setProgress(e.bytesLoaded,e.bytesTotal);
+                this.progress.text = e.bytesLoaded.toString();
+                progBar.label= "CurrentProgress" + " " + Math.ceil(e.bytesLoaded/e.bytesTotal *100) + "%";
+                
+                
+            }
+            
+            private function reset():void {
+                if (thread != null) {
+                    thread.removeEventListener(Event.COMPLETE,handleComplete);
+                    thread.removeEventListener(ProgressEvent.PROGRESS,handleProgress);
+                }
+                
+                this.progBar.setProgress(0,100);
+                this.progBar.label =  "CurrentProgress" + " 0%";
+                
+                createThread();
+                this.progress.text= this.runnable.getProgress().toString();
+                this.totalWork.text = this.runnable.getTotal().toString();
+            }
+            
+        ]]>
+    </mx:Script>	
 
-	<mx:Label x="10" y="14" text="Total work:"/>
-	<mx:Label x="125" y="14" text="Progress:"/>
-	<mx:Label x="83" y="14" width="30" id="totalWork" visible="true"/>
-	<mx:Label x="184" y="13" width="39" id="progress" />
-	<mx:Button x="249" y="11" label="Start" width="67" click="start()"/>
-	<mx:Button x="324" y="11" label="Reset" width="67" click="reset()"/>
-	<mx:ProgressBar id="progBar" x="10" y="40" width="425"
-		minimum="0" visible="true" maximum="100" label="CurrentProgress 0%" 
+    <mx:Label x="10" y="14" text="Total work:"/>
+    <mx:Label x="125" y="14" text="Progress:"/>
+    <mx:Label x="83" y="14" width="30" id="totalWork" visible="true"/>
+    <mx:Label x="184" y="13" width="39" id="progress" />
+    <mx:Button x="249" y="11" label="Start" width="67" click="start()"/>
+    <mx:Button x="324" y="11" label="Reset" width="67" click="reset()"/>
+    <mx:ProgressBar id="progBar" x="10" y="40" width="425"
+        minimum="0" visible="true" maximum="100" label="CurrentProgress 0%" 
             direction="right" mode="manual" />
-	
+    
 </mx:Application>
